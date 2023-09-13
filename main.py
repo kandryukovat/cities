@@ -1,9 +1,4 @@
-import sqlite3
-conn = sqlite3.connect('game.db')
-cur = conn.cursor()
-set = cur.execute('SELECT * FROM cities')
-all_city_pairs = cur.fetchall()
-conn.close()
+from settings import Settings
 
 
 def get_new_word(letter, cities_list, already_used_words):
@@ -46,13 +41,20 @@ def get_last_letter(word):
         last_letter = word[-2].lower()
     return last_letter
 
-stop_words = ['стоп', 'сдаюсь']#TODO вынести в настройки
+s = Settings()
+
+stop_words = s.get_stop_words()
+all_city_pairs = s.get_cities()
+arguable = s.get_arguables()
+sayings = s.get_sayings()
+
 cities_list = []
 already_used_words = []
+
 for pair in all_city_pairs:
     cities_list.append(pair[0])
 #print(cities_list)
-print('Начинай')
+print(sayings['greeting'])
 stop = 0
 while not stop:
     answer = ''
@@ -60,9 +62,9 @@ while not stop:
         word = input()
         answer = check_input_word(word, cities_list, already_used_words, stop_words)
         if answer == '':
-            print('Такого города не существует в РФ, попробуй еще раз')
+            print(sayings['no_such_city_message'])
         elif answer == 'already':
-            print('Этот город уже назывался. Попробуй еще раз')
+            print(sayings['already_was_message'])
 
     last_letter = get_last_letter(word)
     answer = get_new_word(last_letter, cities_list, already_used_words)
