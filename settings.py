@@ -25,8 +25,8 @@ class Settings():
     def get_stop_words(self):
         if self.lang == 'ru':
             return self.stop_words['ru']
-        elif self.lang == 'eng':
-            return self.stop_words['eng']
+        elif self.lang == 'en':
+            return self.stop_words['en']
         else:
             return ['0']
 
@@ -47,13 +47,25 @@ class Settings():
             greeting = 'Привет, начинай!'
             no_such_city_message = 'Такого города не существует в РФ, попробуй еще раз'
             already_was_message = 'Этот город уже назывался. Попробуй еще раз'
+            wrong_letter_message = 'Нужно назвать город на букву'
         else:
             greeting = 'Hi, shoot!'
             no_such_city_message = 'There is no such city in USA. Try again'
             already_was_message = 'This one has already been named. Try again'
+            wrong_letter_message = 'You have to enter a city that starts with the letter'
         return {'greeting': greeting,
                 'no_such_city_message': no_such_city_message,
-                'already_was_message': already_was_message}
+                'already_was_message': already_was_message,
+                'wrong_letter_message': wrong_letter_message}
+
+
+    def get_win_sayng(self, letter):
+        if self.lang == 'ru':
+            you_win_message = 'Города на букву ' + letter + ' закончились\nТвоя победа!'
+        else:
+            you_win_message = 'There is no more cities that end on ' + letter + '\nYou win!'
+        return you_win_message
+
 
 """
     def change_lang(self, value):
