@@ -50,49 +50,49 @@ def check_arguable(word, arguable):
         if a.lower() == word.lower():
             return True
     return False
+if __name__ == "__main__":
+    s = Settings()
 
-s = Settings()
+    stop_words = s.get_stop_words()
+    all_city_pairs = s.get_cities()
+    arguable = s.get_arguables()
+    sayings = s.get_sayings()
+    arguable_msg = s.get_arguable_saying()
+    use_arguable = s.get_use_arguable()
 
-stop_words = s.get_stop_words()
-all_city_pairs = s.get_cities()
-arguable = s.get_arguables()
-sayings = s.get_sayings()
-arguable_msg = s.get_arguable_saying()
-use_arguable = s.get_use_arguable()
+    cities_list = []
+    already_used_words = []
 
-cities_list = []
-already_used_words = []
+    for pair in all_city_pairs:
+        cities_list.append(pair[0])
 
-for pair in all_city_pairs:
-    cities_list.append(pair[0])
+    print(sayings['greeting'])
+    stop = 0
+    last_letter = ''
+    while not stop:
+        answer = ''
+        while not answer == 'valid':
+            word = input()
+            answer = check_input_word(last_letter, word, cities_list, already_used_words, stop_words)
+            if answer == '':
+                print(sayings['no_such_city_message'])
+            elif answer == 'already':
+                print(sayings['already_was_message'])
+            elif answer == 'valid':
+                if use_arguable == False:
+                    if check_arguable(word, arguable):
+                        answer = 'arguable'
+                        print(arguable_msg)
 
-print(sayings['greeting'])
-stop = 0
-last_letter = ''
-while not stop:
-    answer = ''
-    while not answer == 'valid':
-        word = input()
-        answer = check_input_word(last_letter, word, cities_list, already_used_words, stop_words)
-        if answer == '':
-            print(sayings['no_such_city_message'])
-        elif answer == 'already':
-            print(sayings['already_was_message'])
-        elif answer == 'valid':
-            if use_arguable == False:
-                if check_arguable(word, arguable):
-                    answer = 'arguable'
-                    print(arguable_msg)
-
-    last_letter = get_last_letter(word)
-    answer = get_new_word(last_letter, cities_list, already_used_words)
-    computers_word = answer[0]
-    if computers_word == '':
-        print(s.get_win_sayng(last_letter))
-        stop = 1
-    else:
-        print(computers_word)
-        last_letter = get_last_letter(computers_word)
+        last_letter = get_last_letter(word)
+        answer = get_new_word(last_letter, cities_list, already_used_words)
+        computers_word = answer[0]
+        if computers_word == '':
+            print(s.get_win_sayng(last_letter))
+            stop = 1
+        else:
+            print(computers_word)
+            last_letter = get_last_letter(computers_word)
 
 
 
