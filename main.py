@@ -45,12 +45,20 @@ def get_last_letter(word):
         last_letter = word[-2].lower()
     return last_letter
 
+def check_arguable(word, arguable):
+    for a in arguable:
+        if a.lower() == word.lower():
+            return True
+    return False
+
 s = Settings()
 
 stop_words = s.get_stop_words()
 all_city_pairs = s.get_cities()
 arguable = s.get_arguables()
 sayings = s.get_sayings()
+arguable_msg = s.get_arguable_saying()
+use_arguable = s.get_use_arguable()
 
 cities_list = []
 already_used_words = []
@@ -70,6 +78,11 @@ while not stop:
             print(sayings['no_such_city_message'])
         elif answer == 'already':
             print(sayings['already_was_message'])
+        elif answer == 'valid':
+            if use_arguable == False:
+                if check_arguable(word, arguable):
+                    answer = 'arguable'
+                    print(arguable_msg)
 
     last_letter = get_last_letter(word)
     answer = get_new_word(last_letter, cities_list, already_used_words)

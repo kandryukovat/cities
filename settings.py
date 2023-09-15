@@ -11,7 +11,8 @@ class Settings():
         self.stop_words = {'ru': ['стоп', '0', 'сдаюсь'], 'en': ['stop', '0']}
         self.arguable_ru = ['Алупка', 'Алушта', 'Армянск', 'Бахчисарай', 'Белогорск', 'Джанкой',
             'Евпатория', 'Керчь', 'Красноперекопск', 'Саки', 'Севастополь', 'Симферополь',
-            'Старый' 'Крым', 'Судак', 'Феодосия', 'Щёлкино', 'Ялта']
+            'Старый Крым', 'Судак', 'Феодосия', 'Щёлкино', 'Ялта']
+        self.use_arguable = True
 
 
     def get_lang(self):
@@ -66,6 +67,13 @@ class Settings():
             you_win_message = 'There is no more cities that end on ' + letter + '\nYou win!'
         return you_win_message
 
+
+    def get_arguable_saying(self):
+        return 'Этот город не признан за РФ. При текущих настройках такие города не участвуют в игре'
+
+
+    def get_use_arguable(self):
+        return self.use_arguable
 
 """
     def change_lang(self, value):
