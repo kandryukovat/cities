@@ -1,7 +1,7 @@
 from settings import Settings
 
 
-def get_new_word(letter, cities_list, already_used_words):
+def get_new_word(letter, cities_list, already_used_words):#TODO: add checking on arguable cities
     """gets a new word from the list that starts from the specified letter"""
     next_word = ''
     for word in cities_list:
@@ -12,15 +12,13 @@ def get_new_word(letter, cities_list, already_used_words):
         update_word_lists(word, cities_list, already_used_words)
     return (next_word, cities_list, already_used_words)
 
-def check_input_word(last_letter, input_word, cities_list, already_used_words, stop_words):
+def check_input_word(last_letter, input_word, cities_list, already_used_words, stop_words):#TODO: check the win conditions
     """checks if the word is a valid city name and was not used yet"""
-    if input_word.lower() in stop_words:
-        raise SystemExit
     answer = ''
-
+    if input_word.lower() in stop_words:
+        return 'stop'
     if last_letter.lower() != input_word[0].lower():
         if last_letter != '':
-            print(sayings['wrong_letter_message'], last_letter)
             return 'letter'
     for word in already_used_words:
         if word.lower() == input_word.lower():
@@ -74,10 +72,14 @@ if __name__ == "__main__":
         while not answer == 'valid':
             word = input()
             answer = check_input_word(last_letter, word, cities_list, already_used_words, stop_words)
-            if answer == '':
+            if answer == 'stop':
+                raise SystemExit
+            elif answer == '':
                 print(sayings['no_such_city_message'])
             elif answer == 'already':
                 print(sayings['already_was_message'])
+            elif answer == 'letter':
+                print(sayings['wrong_letter_message'], last_letter)
             elif answer == 'valid':
                 if use_arguable == False:
                     if check_arguable(word, arguable):
