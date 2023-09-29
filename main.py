@@ -12,7 +12,7 @@ def get_new_word(letter, cities_list, already_used_words, arguable):
         update_word_lists(word, cities_list, already_used_words)
     return (next_word, cities_list, already_used_words)
 
-def check_input_word(last_letter, input_word, cities_list, already_used_words, stop_words, arguable):#TODO: check the lose conditions
+def check_input_word(last_letter, input_word, cities_list, already_used_words, stop_words, arguable):
     """checks if the word is a valid city name and was not used yet"""
     answer = ''
     input_word = input_word.lower()
@@ -55,6 +55,13 @@ def check_arguable(word, arguable):
             return True
     return False
 
+def check_lose_conditions(letter, cities_list):
+    no_more_words = True
+    for city in cities_list:
+        if city[0].lower() == letter:
+            no_more_words = False
+            break
+    return no_more_words
 
 if __name__ == "__main__":
     s = Settings()
@@ -110,6 +117,10 @@ if __name__ == "__main__":
         else:
             print(computers_word)
             last_letter = get_last_letter(computers_word)
+            losing = check_lose_conditions(last_letter, cities_list)
+            if losing:
+                print(s.get_lose_sayng(last_letter))
+                stop = 1
 
 
 

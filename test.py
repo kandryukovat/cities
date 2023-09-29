@@ -153,3 +153,17 @@ class GameTestCase(unittest.TestCase):
         arguable = []
         res = game.check_arguable(word, arguable)
         self.assertEqual(res, False)
+
+    def test_check_lose_conditions_ru_1(self):
+        """if there is no more cities user could type in"""
+        letter = 'а'
+        cities_list = ['Брянск', 'Москва']
+        res = game.check_lose_conditions(letter, cities_list)
+        self.assertEqual(res, True)
+
+    def test_check_lose_conditions_ru_2(self):
+        """if there still are cities user could type in"""
+        letter = 'а'
+        cities_list = ['Анапа', 'Брянск', 'Москва']
+        res = game.check_lose_conditions(letter, cities_list)
+        self.assertEqual(res, False)

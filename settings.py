@@ -68,6 +68,15 @@ class Settings():
         return you_win_message
 
 
+    def get_lose_sayng(self, letter):
+        if self.lang == 'ru':
+            you_lose_message = 'Города на букву ' + letter + ' закончились\nПобеда моя!'
+        else:
+            you_lose_message = 'There is no more cities that end on ' + letter + '\nI win!'
+        return you_lose_message
+
+
+
     def get_arguable_saying(self):
         return 'Этот город не признан за РФ. При текущих настройках такие города не участвуют в игре'
 
